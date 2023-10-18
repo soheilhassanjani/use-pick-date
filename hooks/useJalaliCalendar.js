@@ -16,15 +16,25 @@ const monthNames = [
   "اسفند",
 ];
 
+function sliceArrayIntoChunks(arr, chunkSize) {
+  const chunkedArray = [];
+  for (let i = 0; i < arr.length; i += chunkSize) {
+    chunkedArray.push(arr.slice(i, i + chunkSize));
+  }
+  return chunkedArray;
+}
+
 function findFirstDayOfWeekJalali(jalaliYear, jalaliMonth, jalaliDay) {
   const gregorianDate = toGregorian(jalaliYear, jalaliMonth, jalaliDay);
+
   const date = new Date(
     gregorianDate.gy,
     gregorianDate.gm - 1,
     gregorianDate.gd
   );
   const dayIndex = date.getDay();
-  return (dayIndex + 2) % 7;
+
+  return (dayIndex + 1) % 7;
 }
 
 const useJalaliCalendar = (jalaliYear) => {
@@ -41,12 +51,23 @@ const useJalaliCalendar = (jalaliYear) => {
         monthNames[i - 1],
         findFirstDayOfWeekJalali(jalaliYear, i, 1)
       );
-
       // Create an object representing the Jalali month and its days.
       const jalaliMonth = {
         name: monthNames[i - 1],
         days: daysInMonth,
-        weeks: [],
+        weeks: sliceArrayIntoChunks(
+          [
+            ...Array.from({
+              length: findFirstDayOfWeekJalali(jalaliYear, i, 1),
+            }).map(() => ({})),
+            ...Array.from({
+              length: daysInMonth,
+            }).map((_, i) => ({
+              day: i + 1,
+            })),
+          ],
+          7
+        ),
       };
 
       jalaliMonths.push(jalaliMonth);
