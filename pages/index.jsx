@@ -1,9 +1,10 @@
 import { useState } from "react";
 import useJalaliCalendar from "@/hooks/useJalaliCalendar";
+import clsx from "clsx";
 
 export default function Home() {
   const [jalaliYear, setJalaliYear] = useState(1402);
-  const { months } = useJalaliCalendar(jalaliYear);
+  const { months } = useJalaliCalendar("faIR", jalaliYear);
   console.log(months);
   return (
     <div>
@@ -29,7 +30,14 @@ export default function Home() {
               {month.weeks.map((week, weekID) => (
                 <tr key={weekID}>
                   {week.map((item, dayIndex) => (
-                    <td key={dayIndex}>{item?.day ?? "."}</td>
+                    <td
+                      className={clsx("w-8 h-8 text-center", {
+                        "text-slate-300": item?.prevMonth,
+                      })}
+                      key={dayIndex}
+                    >
+                      {item?.day ?? "."}
+                    </td>
                   ))}
                 </tr>
               ))}

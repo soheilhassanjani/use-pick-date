@@ -9,11 +9,13 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "clsx": "^2.0.0",
     "jalaali-js": "^1.2.6",
     "jalali-moment": "^3.3.11",
     "next": "13.5.4",
     "react": "^18",
-    "react-dom": "^18"
+    "react-dom": "^18",
+    "tailwind-merge": "^1.14.0"
   },
   "devDependencies": {
     "autoprefixer": "^10",
