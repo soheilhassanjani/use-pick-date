@@ -35,11 +35,13 @@ const useJalaliCalendar = (local, year) => {
   const [months, setMonths] = useState([]);
 
   useEffect(() => {
+    //
+    const x = locals?.[local];
+    //
     const months = [];
-
+    //
     for (let i = 1; i <= 12; i++) {
       //
-      const x = locals?.[local];
       // Calculate the number of days in the Jalali month.
       // const daysInMonth = Jalaali.jalaaliMonthLength(jalaliYear, i);
       const daysInMonth = x.getMonthLength(year, i);
